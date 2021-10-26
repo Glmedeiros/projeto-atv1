@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ControladorInimigo : MonoBehaviour
 {
-    public Inimigo inimigoOriginal;
+    public Inimigo inimigoPequenoPrefab;
+    public Inimigo InimigoGrandePrefab;
     private float tempoDecorrido;
 
 
@@ -34,8 +35,28 @@ public class ControladorInimigo : MonoBehaviour
 
             Vector2 posicaoInimigo = new Vector2(posicaoX, posicaoMaxima.y);
 
+
+
+            Inimigo prefabInimigo;
+
+
+            //criance a chance de criar inimigos maiores com menos probabilidade q os pequenos
+            float chance = Random.Range(0f, 100f);
+            if(chance <= 25) // 25% de chances de criar um inimigo grande
+            {
+                prefabInimigo = this.InimigoGrandePrefab;   
+            }
+            else
+            {
+                prefabInimigo = this.inimigoPequenoPrefab;
+            }
+
+            
+
+
+
             //criar um novo inimigo
-            Instantiate(this.inimigoOriginal, posicaoInimigo, Quaternion.identity);
+            Instantiate(prefabInimigo, posicaoInimigo, Quaternion.identity);
         }
     }
 }

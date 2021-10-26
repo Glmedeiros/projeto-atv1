@@ -10,6 +10,9 @@ public class Inimigo : MonoBehaviour
     public float velocidadeMaxima;
 
     private float velocidadeY;
+    public ParticleSystem particulaExplosaoPrefab;
+
+    public int vidas;
 
 
 
@@ -43,14 +46,27 @@ public class Inimigo : MonoBehaviour
     }
 
 
-    public void Destruir(bool derrotado)
+
+    public void ReceberDano()
+    {
+        this.vidas--;
+        if(this.vidas <= 0)
+        {
+            Destruir(true);
+        }
+    }
+
+    private void Destruir(bool derrotado)
     {
         if (derrotado)
         {
             //metodo para destruir inimigo e somar pontuacao
             ControladorPontuacao.Pontuacao++;
         }
-        
+
+        ParticleSystem particulaExplosao =  Instantiate(this.particulaExplosaoPrefab, this.transform.position, Quaternion.identity);
+        Destroy(particulaExplosao.gameObject, 1f); //destroi a particula apos um segundo
+
         Destroy(this.gameObject);
 
     }

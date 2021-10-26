@@ -14,6 +14,18 @@ public class Laser : MonoBehaviour
         this.rigidbody.velocity = new Vector2(0, this.velocidadeY);
     }
 
+    private void Update()
+    {
+        Camera camera = Camera.main;
+        Vector3 posicaonaCamera = camera.WorldToViewportPoint(this.transform.position);
+        //saiu da tela pela posicao superior
+        if(posicaonaCamera.y > 1)
+        {
+            //destroi o proprio laser para evitar excesso de memoria no jogo pq cria varios tiros toda hora
+            Destroy(this.gameObject);
+        }
+    }
+
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.CompareTag("Inimigo"))
@@ -24,7 +36,7 @@ public class Laser : MonoBehaviour
             Destroy(this.gameObject);
             */
             Inimigo inimigo = collision.GetComponent<Inimigo>();
-            inimigo.Destruir(true);//parte da bool no inimigo(destruir)
+            inimigo.ReceberDano();//parte da bool no inimigo(destruir)
             Destroy(this.gameObject);
 
         }

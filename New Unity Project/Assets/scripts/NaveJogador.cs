@@ -55,13 +55,17 @@ public class NaveJogador : MonoBehaviour
 
     }
 
+    
+
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.CompareTag("Inimigo"))
         {
             Vida--;
             Inimigo inimigo = collision.GetComponent<Inimigo>();
-            inimigo.Destruir(false);// parte da bool do inimigo(derrotado)
+            inimigo.ReceberDano();// parte da bool do inimigo(derrotado)
         }
     }// trigger para tirar vida do jogador e destruir inimigo que enconstou nele
 
